@@ -1,0 +1,48 @@
+{
+  "name": "taller-repair",
+  "version": "0.1.0",
+  "description": "Aplicación local y offline para gestionar reparaciones electrónicas",
+  "main": "out/main/index.js",
+  "scripts": {
+    "test": "vitest run",
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.node.json",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "rebuild:native": "electron-builder install-app-deps",
+    "package:win": "npm run rebuild:native && npm run build && electron-builder --win nsis"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "@tailwindcss/vite": "4.3.3",
+    "better-sqlite3": "13.0.3",
+    "date-fns": "4.4.0",
+    "drizzle-orm": "0.45.3",
+    "electron": "44.5.1",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-router-dom": "7.18.4",
+    "tailwindcss": "4.3.3",
+    "zod": "4.6.5",
+    "zustand": "5.0.15"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.4",
+    "@types/react": "18.3.31",
+    "@types/react-dom": "18.3.7",
+    "@vitejs/plugin-react": "5.2.0",
+    "drizzle-kit": "1.0.0-rc.4",
+    "electron-builder": "26.15.3",
+    "electron-vite": "5.0.0",
+    "typescript": "5.9.3",
+    "vite": "7.3.6",
+    "vitest": "5.0.3"
+  },
+  "overrides": {
+    "@esbuild-kit/core-utils": {}
+  }
+}
