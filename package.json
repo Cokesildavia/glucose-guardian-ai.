@@ -7,7 +7,7 @@
     "test": "vitest run",
     "dev": "electron-vite dev",
     "build": "electron-vite build",
-    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.node.json",
+    "typecheck": "tsc --noEmit -p tsconfig.app.json && tsc --noEmit -p tsconfig.node.json",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "rebuild:native": "electron-builder install-app-deps",
@@ -17,12 +17,42 @@
   "author": "",
   "license": "MIT",
   "type": "module",
+  "build": {
+    "appId": "com.cokesildavia.tallerrepair",
+    "productName": "Taller Repair",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "out/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "drizzle",
+        "to": "drizzle"
+      }
+    ],
+    "asarUnpack": [
+      "**/node_modules/better-sqlite3/**"
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true
+    }
+  },
   "dependencies": {
     "@tailwindcss/vite": "4.3.3",
     "better-sqlite3": "13.0.3",
     "date-fns": "4.4.0",
     "drizzle-orm": "0.45.3",
-    "electron": "44.5.1",
+    "lucide-react": "1.49.0",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-router-dom": "7.18.4",
@@ -31,11 +61,13 @@
     "zustand": "5.0.15"
   },
   "devDependencies": {
+    "@types/better-sqlite3": "7.6.13",
     "@types/node": "22.20.4",
     "@types/react": "18.3.31",
     "@types/react-dom": "18.3.7",
     "@vitejs/plugin-react": "5.2.0",
     "drizzle-kit": "1.0.0-rc.4",
+    "electron": "44.5.1",
     "electron-builder": "26.15.3",
     "electron-vite": "5.0.0",
     "typescript": "5.9.3",

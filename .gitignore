@@ -216,3 +216,14 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Taller Repair / Electron
+node_modules/
+out/
+release/
+.vite/
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+.env*
+!.env.example
