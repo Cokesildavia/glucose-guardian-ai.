@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "8d2f8793-388b-4fc9-a497-eb38685f7fe6",
+  "id": "e7efe540-258e-47bf-a2c5-2e258a0f9212",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "customers": {
@@ -167,8 +167,8 @@
           "autoincrement": false,
           "default": "''"
         },
-        "created_at": {
-          "name": "created_at",
+        "changed_at": {
+          "name": "changed_at",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
@@ -321,6 +321,14 @@
         },
         "created_at": {
           "name": "created_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        "updated_at": {
+          "name": "updated_at",
           "type": "text",
           "primaryKey": false,
           "notNull": true,

@@ -55,9 +55,6 @@ export function AppShell({ children }: { children: ReactNode }) {
               >
                 <Icon size={17} strokeWidth={1.9} />
                 {label}
-                {label === 'Reparaciones' && (
-                  <span className="ml-auto rounded-md bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-500">—</span>
-                )}
               </NavLink>
             ))}
           </nav>

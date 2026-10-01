@@ -17,7 +17,7 @@ function createMainWindow(): void {
     backgroundColor: '#f6f7f9',
     title: 'Taller Repair',
     webPreferences: {
-      preload: join(currentDirectory, '../preload/index.js'),
+      preload: join(currentDirectory, '../preload/index.cjs'),
       contextIsolation: true,
       nodeIntegration: false,
       sandbox: true,

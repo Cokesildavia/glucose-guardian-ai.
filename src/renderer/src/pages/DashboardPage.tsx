@@ -11,8 +11,8 @@ import {
 import { formatDistanceToNow, parseISO } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { Link } from 'react-router-dom';
-import type { RepairStatus } from '../../shared/contracts';
-import type { CreateRepairInput } from '../../shared/validation';
+import type { RepairStatus } from '../../../shared/contracts';
+import type { CreateRepairInput } from '../../../shared/validation';
 import { AppShell } from '../components/AppShell';
 import { NewRepairDialog } from '../components/NewRepairDialog';
 import { useDashboardStore } from '../store/dashboard-store';

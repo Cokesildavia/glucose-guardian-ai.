@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto';
-import { count, desc, inArray, sql } from 'drizzle-orm';
+import { and, count, desc, eq, inArray, sql } from 'drizzle-orm';
 import type { BetterSQLite3Database } from 'drizzle-orm/better-sqlite3';
 import type { CreateRepairInput } from '../../shared/validation';
 import type { DashboardSummary, RepairSummary } from '../../shared/contracts';
@@ -35,8 +35,8 @@ export function getDashboardSummary(database: Database): DashboardSummary {
       receivedAt: schema.repairs.createdAt,
     })
     .from(schema.repairs)
-    .innerJoin(schema.devices, sql`${schema.repairs.deviceId} = ${schema.devices.id}`)
-    .innerJoin(schema.customers, sql`${schema.devices.customerId} = ${schema.customers.id}`)
+    .innerJoin(schema.devices, eq(schema.repairs.deviceId, schema.devices.id))
+    .innerJoin(schema.customers, eq(schema.devices.customerId, schema.customers.id))
     .orderBy(desc(schema.repairs.createdAt))
     .limit(8)
     .all() as RepairSummary[];
@@ -54,15 +54,27 @@ export function getDashboardSummary(database: Database): DashboardSummary {
 
 export function createRepair(database: Database, input: CreateRepairInput): RepairSummary {
   const repairId = randomUUID();
-  const customerId = randomUUID();
   const deviceId = randomUUID();
   const receivedAt = new Date().toISOString();
 
   database.transaction((transaction) => {
-    transaction
-      .insert(schema.customers)
-      .values({ id: customerId, name: input.customerName, phone: input.customerPhone })
-      .run();
+    const existingCustomer = transaction
+      .select({ id: schema.customers.id })
+      .from(schema.customers)
+      .where(and(
+        eq(schema.customers.name, input.customerName),
+        eq(schema.customers.phone, input.customerPhone),
+      ))
+      .get();
+    const customerId = existingCustomer?.id ?? randomUUID();
+
+    if (!existingCustomer) {
+      transaction
+        .insert(schema.customers)
+        .values({ id: customerId, name: input.customerName, phone: input.customerPhone })
+        .run();
+    }
+
     transaction
       .insert(schema.devices)
       .values({
@@ -81,7 +93,7 @@ export function createRepair(database: Database, input: CreateRepairInput): Repa
       .insert(schema.repairHistory)
       .values({ id: randomUUID(), repairId, status: 'received', note: 'Equipo recibido', changedAt: receivedAt })
       .run();
-  }).immediate();
+  });
 
   return {
     id: repairId,

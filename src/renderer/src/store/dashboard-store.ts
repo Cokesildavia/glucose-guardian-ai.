@@ -1,6 +1,6 @@
 import { create } from 'zustand';
-import type { CreateRepairInput } from '../../shared/validation';
-import type { DashboardSummary } from '../../shared/contracts';
+import type { CreateRepairInput } from '../../../shared/validation';
+import type { DashboardSummary } from '../../../shared/contracts';
 
 interface DashboardState {
   summary: DashboardSummary | null;

@@ -1,7 +1,7 @@
 import { sql } from 'drizzle-orm';
 import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 
-const createdAt = () => text('created_at').notNull().default(sql`CURRENT_TIMESTAMP`);
+const timestamp = (name: string) => text(name).notNull().default(sql`CURRENT_TIMESTAMP`);
 
 export const customers = sqliteTable('customers', {
   id: text('id').primaryKey(),
@@ -9,7 +9,7 @@ export const customers = sqliteTable('customers', {
   phone: text('phone').notNull().default(''),
   email: text('email').notNull().default(''),
   notes: text('notes').notNull().default(''),
-  createdAt: createdAt(),
+  createdAt: timestamp('created_at'),
 });
 
 export const devices = sqliteTable('devices', {
@@ -21,7 +21,7 @@ export const devices = sqliteTable('devices', {
   brand: text('brand').notNull(),
   model: text('model').notNull(),
   serialNumber: text('serial_number').notNull().default(''),
-  createdAt: createdAt(),
+  createdAt: timestamp('created_at'),
 });
 
 export const repairs = sqliteTable('repairs', {
@@ -39,8 +39,8 @@ export const repairs = sqliteTable('repairs', {
     .default('received'),
   estimatedCostCents: integer('estimated_cost_cents'),
   finalCostCents: integer('final_cost_cents'),
-  createdAt: createdAt(),
-  updatedAt: createdAt(),
+  createdAt: timestamp('created_at'),
+  updatedAt: timestamp('updated_at'),
 });
 
 export const repairHistory = sqliteTable('repair_history', {
@@ -50,7 +50,7 @@ export const repairHistory = sqliteTable('repair_history', {
     .references(() => repairs.id, { onDelete: 'cascade' }),
   status: text('status').notNull(),
   note: text('note').notNull().default(''),
-  changedAt: createdAt(),
+  changedAt: timestamp('changed_at'),
 });
 
 export const repairPhotos = sqliteTable('repair_photos', {
@@ -60,5 +60,5 @@ export const repairPhotos = sqliteTable('repair_photos', {
     .references(() => repairs.id, { onDelete: 'cascade' }),
   relativePath: text('relative_path').notNull(),
   caption: text('caption').notNull().default(''),
-  createdAt: createdAt(),
+  createdAt: timestamp('created_at'),
 });

@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { createRepairSchema } from '../../shared/validation';
-import type { CreateRepairInput } from '../../shared/validation';
+import type { FormEvent } from 'react';
+import { createRepairSchema } from '../../../shared/validation';
+import type { CreateRepairInput } from '../../../shared/validation';
 
 interface NewRepairDialogProps {
   onClose: () => void;
@@ -14,7 +15,7 @@ export function NewRepairDialog({ onClose, onSubmit }: NewRepairDialogProps) {
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError('');
 
